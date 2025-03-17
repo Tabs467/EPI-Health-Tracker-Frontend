@@ -15,7 +15,7 @@ A Vue.js-based authentication UI that communicates with a backend API for user m
 
 This frontend is designed to work seamlessly with a Laravel backend. You can find my Laravel implementation here:
 
-[Laravel-Auth-Backend](https://github.com/Tabs467/Laravel-Auth-Backend)
+[EPI-Health-Tracker-Backend](https://github.com/Tabs467/EPI-Health-Tracker-Backend)
 
 ## Project Setup
 
