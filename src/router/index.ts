@@ -17,6 +17,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home,
+      meta: { requiresGuest: true },
     },
     {
       path: '/register',
