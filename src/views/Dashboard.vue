@@ -6,4 +6,4 @@
           <h1 class="main-title">Dashboard</h1>
       </div>
   </main>
-</template>  
+</template>

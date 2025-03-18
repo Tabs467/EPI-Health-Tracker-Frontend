@@ -6,4 +6,4 @@
           <h1 class="main-title">Log</h1>
       </div>
   </main>
-</template>  
+</template>

@@ -6,4 +6,4 @@
           <h1 class="main-title">Search</h1>
       </div>
   </main>
-</template>  
+</template>
