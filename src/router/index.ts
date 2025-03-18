@@ -76,7 +76,7 @@ router.beforeEach((to, from, next) => {
     next({name: "login"});
   }
   else if (to.matched.some((record) => record.meta.requiresGuest) && auth.isLoggedIn) {
-    next({name: "profile"});
+    next({name: "dashboard"});
   }
   else {
     next();
