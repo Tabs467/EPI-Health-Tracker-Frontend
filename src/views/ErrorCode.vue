@@ -9,9 +9,10 @@
 
   const code = computed(() => props.code || 'No Error Code');
 </script>
-
 <template>
-  <div>
-    <h1>Error: {{ code }}</h1>
-  </div>
-</template>
+  <main class="main-container">
+      <div class="main-card">
+          <h1 class="main-title">Error {{ code }}</h1>
+      </div>
+  </main>
+</template>  

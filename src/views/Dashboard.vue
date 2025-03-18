@@ -1,8 +1,9 @@
 <script setup lang="ts">
 </script>
-
 <template>
-  <main>
-    <h1>Dashboard</h1>
+  <main class="main-container">
+      <div class="main-card">
+          <h1 class="main-title">Dashboard</h1>
+      </div>
   </main>
-</template>
+</template>  
