@@ -47,33 +47,26 @@
     };
 </script>
 <template>
-    <div>
-        <h1 class="pb-5">Login</h1>
-        <form class="max-w-sm mx-auto" novalidate @submit.prevent="handleSubmit()">
-            <div class="mb-5 bottom-5 pb-3">
-                <label for="email" class="form-field-textbox-label">Email</label>
-                <input type="email" id="email" v-model="form.email" class="form-field-textbox" placeholder="johndoe@email.com" />
-                <template v-if="errors.email">
-                    <span class="text-red-500 text-xs italic">
-                        {{ errors.email }}
-                    </span>
-                </template>
-                <template v-if="errors.api">
-                    <span class="text-red-500 text-xs italic">
-                        {{ errors.api }}
-                    </span>
-                </template>
-            </div>
-            <div class="mb-5 bottom-5 pb-3">
-                <label for="password" class="form-field-textbox-label">Password</label>
-                <input type="password" id="password" v-model="form.password" class="form-field-textbox" />
-                <template v-if="errors.password">
-                    <span class="text-red-500 text-xs italic">
-                        {{ errors.password }}
-                    </span>
-                </template>
-            </div>
-            <button type="submit" class="form-field-submit">Login</button>
-        </form>
-    </div>
+    <main class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">Login</h1>
+            <form class="auth-form" novalidate @submit.prevent="handleSubmit()">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" v-model="form.email" class="form-input" placeholder="johndoe@email.com" />
+                    <span v-if="errors.email" class="form-error">{{ errors.email }}</span>
+                    <span v-if="errors.api" class="form-error">{{ errors.api }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" v-model="form.password" class="form-input" />
+                    <span v-if="errors.password" class="form-error">{{ errors.password }}</span>
+                </div>
+
+                <button type="submit" class="auth-button">Login</button>
+                <RouterLink to="/" class="auth-button secondary">Return</RouterLink>
+            </form>
+        </div>
+    </main>
 </template>

@@ -66,51 +66,38 @@
     };
 </script>
 <template>
-    <div>
-        <h1 class="pb-5">Register</h1>
-        <form class="max-w-sm mx-auto" novalidate @submit.prevent="handleSubmit()">
-            <div class="mb-5 bottom-5 pb-3">
-                <label for="name" class="form-field-textbox-label">Name</label>
-                <input type="name" id="name" v-model="form.name" class="form-field-textbox" placeholder="John Doe" />
-                <template v-if="errors.name">
-                    <span class="text-red-500 text-xs italic">
-                        {{ errors.name }}
-                    </span>
-                </template>
-            </div>
-            <div class="mb-5 bottom-5 pb-3">
-                <label for="email" class="form-field-textbox-label">Email</label>
-                <input type="email" id="email" v-model="form.email" class="form-field-textbox" placeholder="johndoe@email.com" />
-                <template v-if="errors.email">
-                    <span class="text-red-500 text-xs italic">
-                        {{ errors.email }}
-                    </span>
-                </template>
-            </div>
-            <div class="mb-5 bottom-5 pb-3">
-                <label for="password" class="form-field-textbox-label">Password</label>
-                <input type="password" id="password" v-model="form.password" class="form-field-textbox" />
-                <template v-if="errors.password">
-                    <span class="text-red-500 text-xs italic">
-                        {{ errors.password }}
-                    </span>
-                </template>
-            </div>
-            <div class="mb-5 bottom-5 pb-3">
-                <label for="password_confirmation" class="form-field-textbox-label">Password confirmation</label>
-                <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="form-field-textbox" />
-                <template v-if="errors.password_confirmation">
-                    <span class="text-red-500 text-xs italic">
-                        {{ errors.password_confirmation }}
-                    </span>
-                </template>
-            </div>
-            <button type="submit" class="form-field-submit">Register</button>
-            <template v-if="errors.api">
-                <span class="text-red-500 text-s italic pl-5">
-                    {{ errors.api }}
-                </span>
-            </template>
-        </form>
-    </div>
-</template>
+    <main class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">Register</h1>
+            <form class="auth-form" novalidate @submit.prevent="handleSubmit()">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" v-model="form.name" class="form-input" placeholder="John Doe" />
+                    <span v-if="errors.name" class="form-error">{{ errors.name }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" v-model="form.email" class="form-input" placeholder="johndoe@email.com" />
+                    <span v-if="errors.email" class="form-error">{{ errors.email }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" v-model="form.password" class="form-input" />
+                    <span v-if="errors.password" class="form-error">{{ errors.password }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_confirmation" class="form-label">Confirm Password</label>
+                    <input type="password" id="password_confirmation" v-model="form.password_confirmation" class="form-input" />
+                    <span v-if="errors.password_confirmation" class="form-error">{{ errors.password_confirmation }}</span>
+                </div>
+
+                <button type="submit" class="auth-button">Register</button>
+                <span v-if="errors.api" class="form-error api-error">{{ errors.api }}</span>
+                <RouterLink to="/" class="auth-button secondary">Return</RouterLink>
+            </form>
+        </div>
+    </main>
+</template>  

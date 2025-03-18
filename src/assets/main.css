@@ -1,5 +1,7 @@
 @import './base.css';
 
+/* Nav bar */
+
 .nav-link {
   @apply text-gray-700 font-medium px-4 py-2 rounded-md transition duration-300;
 }
@@ -11,6 +13,8 @@
 .nav-link:not(.active-link):hover {
   @apply bg-gray-200;
 }
+
+/* Home */
 
 /* Centering the card */
 .welcome-container {
@@ -46,27 +50,59 @@
   @apply bg-gray-300 text-gray-800 hover:bg-gray-400;
 }
 
-.form-field-textbox {
-  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+/* Login / Register */
+
+/* Center the Login/Register form */
+.auth-container {
+  @apply flex items-center justify-center min-h-screen bg-gray-100 px-4;
 }
 
-.form-field-textbox-label {
-  @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+/* Login/Register form card */
+.auth-card {
+  @apply bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl text-center;
 }
 
-.form-field-checkbox {
-  @apply w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300 
-         dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800;
+/* Title */
+.auth-title {
+  @apply text-4xl font-bold text-gray-800;
 }
 
-.form-field-submit {
-  @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full 
-         sm:w-auto px-5 py-2.5 mt-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+/* Form layout */
+.auth-form {
+  @apply flex flex-col gap-5 mt-6;
 }
 
-.form-field-checkbox-label {
-  @apply ms-2 text-sm font-medium text-gray-900 dark:text-gray-300;
+/* Form group (label + input) */
+.form-group {
+  @apply flex flex-col text-left;
+}
+
+/* Label styling */
+.form-label {
+  @apply text-gray-700 font-medium mb-1;
+}
+
+/* Input field styling */
+.form-input {
+  @apply px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition;
+}
+
+/* Error message */
+.form-error {
+  @apply text-red-500 text-xs italic mt-1;
+}
+
+/* Primary Button */
+.auth-button {
+  @apply bg-orange-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-orange-600 transition font-medium text-center;
+}
+
+/* Secondary (Return) Button */
+.auth-button.secondary {
+  @apply bg-gray-300 text-gray-800 hover:bg-gray-400 mt-3;
+}
+
+/* API error message (larger, centered error text) */
+.api-error {
+  @apply block text-center mt-2 text-sm;
 }
