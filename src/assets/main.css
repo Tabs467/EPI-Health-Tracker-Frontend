@@ -14,22 +14,17 @@
   @apply bg-gray-200;
 }
 
-.welcome-text {
-  @apply text-gray-600 mt-2;
-}
-
-/* Button container */
-.welcome-buttons {
+.button-group {
   @apply flex flex-col gap-3 mt-6;
 }
 
 /* Primary button */
-.welcome-button {
+.button {
   @apply bg-orange-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-orange-600 transition font-medium;
 }
 
 /* Secondary button variation */
-.welcome-button.secondary {
+.button.secondary {
   @apply bg-gray-300 text-gray-800 hover:bg-gray-400;
 }
 
@@ -106,6 +101,11 @@
 /* Main text (generic) */
 .main-text {
   @apply text-gray-600 mt-3;
+}
+
+/* Main text for large navigation elements */
+.main-nav-text {
+  @apply text-gray-600 mt-2;
 }
 
 /* Semibold applied to Main text style */
