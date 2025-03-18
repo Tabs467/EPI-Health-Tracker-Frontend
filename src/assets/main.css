@@ -14,23 +14,6 @@
   @apply bg-gray-200;
 }
 
-/* Home */
-
-/* Centering the card */
-.welcome-container {
-  @apply flex items-center justify-center min-h-screen bg-gray-100 px-4;
-}
-
-/* Main card styling */
-.welcome-card {
-  @apply bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl text-center;
-}
-
-/* Title and text styling */
-.welcome-title {
-  @apply text-4xl font-bold text-gray-800;
-}
-
 .welcome-text {
   @apply text-gray-600 mt-2;
 }
@@ -50,14 +33,12 @@
   @apply bg-gray-300 text-gray-800 hover:bg-gray-400;
 }
 
-/* Login / Register */
-
-/* Center the Login/Register form */
+/* Center the form */
 .auth-container {
   @apply flex items-center justify-center min-h-screen bg-gray-100 px-4;
 }
 
-/* Login/Register form card */
+/* Form card */
 .auth-card {
   @apply bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl text-center;
 }
@@ -105,4 +86,33 @@
 /* API error message (larger, centered error text) */
 .api-error {
   @apply block text-center mt-2 text-sm;
+}
+
+/* Centered page layout, positioned from the top of the page */
+.main-container {
+  @apply flex items-start justify-center min-h-screen bg-gray-100 px-4 pt-10;
+}
+
+/* Main card design */
+.main-card {
+  @apply bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl text-center;
+}
+
+/* Main page title */
+.main-title {
+  @apply text-3xl font-bold text-gray-800;
+}
+
+/* Main text (generic) */
+.main-text {
+  @apply text-gray-600 mt-3;
+}
+
+/* Semibold applied to Main text style */
+.main-text-semi-bold {
+  @apply font-semibold;
+}
+
+.logout-button {
+  @apply mt-10;
 }

@@ -11,14 +11,14 @@
     })
 </script>
 <template>
-    <div>
-        <h1 class="pb-5">Profile</h1>
-        <div class="flex flex-col">
-            <div>
-                <p class="pb-5">Welcome back, {{ auth.user?.name }}</p>
-                <p class="pb-5">Email: {{ auth.user?.email }}</p>
-            </div>
-            <button @click="auth.logout" class="form-field-submit">Logout</button>
+    <main class="main-container">
+        <div class="main-card">
+            <h1 class="main-title">Profile</h1>
+            <p class="main-text">
+                Welcome back, <span class="main-text-semi-bold">{{ auth.user?.name }}</span>
+            </p>
+            <p class="main-text">Email: {{ auth.user?.email }}</p>
+            <button @click="auth.logout" class="auth-button logout-button">Logout</button>
         </div>
-    </div>
-</template>
+    </main>
+</template>  

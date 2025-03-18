@@ -1,9 +1,9 @@
 <script setup lang="ts">
 </script>
 <template>
-  <main class="welcome-container">
-    <div class="welcome-card">
-      <h1 class="welcome-title">Welcome</h1>
+  <main class="auth-container">
+    <div class="auth-card">
+      <h1 class="auth-title">Welcome</h1>
       <p class="welcome-text">Please log in or register to continue</p>
       <div class="welcome-buttons">
         <RouterLink to="/login" class="welcome-button">Login</RouterLink>
