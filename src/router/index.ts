@@ -3,6 +3,10 @@ import Home from '../views/Home.vue'
 import Register from '../views/auth/Register.vue'
 import Login from '../views/auth/Login.vue'
 import Profile from '../views/auth/Profile.vue'
+import Dashboard from '../views/Dashboard.vue'
+import Log from '../views/Log.vue'
+import Calendar from '../views/Calendar.vue'
+import Search from '../views/Search.vue'
 import ErrorCode from '../views/ErrorCode.vue'
 import { useAuthStore } from '@/store/auth'
 
@@ -25,6 +29,30 @@ const router = createRouter({
       name: 'login',
       component: Login,
       meta: { requiresGuest: true },
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/log',
+      name: 'log',
+      component: Log,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: Calendar,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Search,
+      meta: { requiresAuth: true },
     },
     {
       path: '/profile',

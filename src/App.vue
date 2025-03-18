@@ -16,13 +16,15 @@
   <header>
     <div>
       <nav>
-        <RouterLink to="/">Home</RouterLink>
         <template v-if="auth.isLoggedIn">
+          <RouterLink to="/dashboard">Dashboard</RouterLink>
+          <RouterLink to="/log">Log</RouterLink>
+          <RouterLink to="/calendar">Calendar</RouterLink>
+          <RouterLink to="/search">Search</RouterLink>
           <RouterLink to="/profile">Profile</RouterLink>
         </template>
         <template v-if="!auth.isLoggedIn">
-          <RouterLink to="/login">Login</RouterLink>
-          <RouterLink to="/register">Register</RouterLink>
+          <RouterLink to="/">Home</RouterLink>
         </template>
       </nav>
     </div>
