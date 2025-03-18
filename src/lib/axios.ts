@@ -20,14 +20,14 @@ axiosInstance.interceptors.response.use(
                 router.push({ name: "login" });
                 break;
             case 404:
-                router.push({ name: "errorcode", params: { code: "404" } });
+                router.push({ name: "error-code", params: { code: "404" } });
                 break;
             case 419:
                 auth.cleanState();
                 router.push({ name: "login" });
                 break;
             case 500:
-                router.push({ name: "errorcode", params: { code: "500" } });
+                router.push({ name: "error-code", params: { code: "500" } });
                 break;
         }
         return Promise.reject(error);

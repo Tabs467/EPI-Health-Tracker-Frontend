@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Home from '../views/Home.vue'
 import Register from '../views/auth/Register.vue'
 import Login from '../views/auth/Login.vue'
-import Dashboard from '../views/auth/Dashboard.vue'
+import Profile from '../views/auth/Profile.vue'
 import ErrorCode from '../views/ErrorCode.vue'
 import { useAuthStore } from '@/store/auth'
 
@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: Home,
     },
     {
       path: '/register',
@@ -27,14 +27,14 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: Dashboard,
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
       meta: { requiresAuth: true },
     },
     {
       path: '/error/:code',
-      name: 'errorcode',
+      name: 'error-code',
       component: ErrorCode,
       props: true,
     },
@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
     next({name: "login"});
   }
   else if (to.matched.some((record) => record.meta.requiresGuest) && auth.isLoggedIn) {
-    next({name: "dashboard"});
+    next({name: "profile"});
   }
   else {
     next();

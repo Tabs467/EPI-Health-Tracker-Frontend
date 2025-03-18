@@ -18,7 +18,7 @@ export const useAuthStore = defineStore("auth", () =>
             try {
                 await axiosInstance.post('/register', data);
                 await getUser();
-                router.push('/dashboard');
+                router.push('/profile');
             } catch (e) {
                 if (e instanceof AxiosError && e.response?.status === 422) {
                     if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
@@ -41,7 +41,7 @@ export const useAuthStore = defineStore("auth", () =>
             try {
                 await axiosInstance.post('/login', data);
                 await getUser();
-                router.push('/dashboard');
+                router.push('/profile');
             } catch (e) {
                 if (e instanceof AxiosError && e.response?.status === 422) {
                     if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
