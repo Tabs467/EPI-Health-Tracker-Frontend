@@ -64,7 +64,7 @@
                     <span v-if="errors.password" class="form-error">{{ errors.password }}</span>
                 </div>
 
-                <button type="submit" class="auth-button">Login</button>
+                <button type="submit" class="auth-button cursor-pointer">Login</button>
                 <RouterLink to="/" class="auth-button secondary">Return</RouterLink>
             </form>
         </div>

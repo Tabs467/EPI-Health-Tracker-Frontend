@@ -94,7 +94,7 @@
                     <span v-if="errors.password_confirmation" class="form-error">{{ errors.password_confirmation }}</span>
                 </div>
 
-                <button type="submit" class="auth-button">Register</button>
+                <button type="submit" class="auth-button cursor-pointer">Register</button>
                 <span v-if="errors.api" class="form-error api-error">{{ errors.api }}</span>
                 <RouterLink to="/" class="auth-button secondary">Return</RouterLink>
             </form>
