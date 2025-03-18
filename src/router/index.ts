@@ -5,6 +5,8 @@ import Login from '../views/auth/Login.vue'
 import Profile from '../views/auth/Profile.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Log from '../views/Log.vue'
+import LogFood from '../views/LogFood.vue'
+import LogSymptom from '../views/LogSymptom.vue'
 import Calendar from '../views/Calendar.vue'
 import Search from '../views/Search.vue'
 import ErrorCode from '../views/ErrorCode.vue'
@@ -41,6 +43,18 @@ const router = createRouter({
       path: '/log',
       name: 'log',
       component: Log,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/log-food',
+      name: 'log-food',
+      component: LogFood,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/log-symptom',
+      name: 'log-symptom',
+      component: LogSymptom,
       meta: { requiresAuth: true },
     },
     {
