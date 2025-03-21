@@ -3,11 +3,11 @@
   import { getFormattedDate } from "@/lib/date";
 
   const auth = useAuthStore();
-  let currentDate = getFormattedDate(new Date());
+  let currentDate = getFormattedDate(new Date(), "display");
 </script>
 <template>
   <main class="main-container">
-      <div class="main-card-wide">
+      <div class="main-card-extra-wide">
           <h1 class="main-title">Dashboard</h1>
           <p class="main-text-large text-left">
             Welcome back, <span class="text-semi-bold">{{ auth.user?.name }}</span>

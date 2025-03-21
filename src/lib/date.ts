@@ -1,10 +1,20 @@
-// Return formatted date in the format "18th March 2025"
-export function getFormattedDate(date: Date): string {
-    const day = date.getDate();
-    const month = date.toLocaleString('en-GB', { month: 'long' });
-    const year = date.getFullYear();
+// Return a formatted date
+export function getFormattedDate(date: Date, format: string): string {
+    // Return a formatted date in the format "18th March 2025"
+    if (format === "display") {
+        const day = date.getDate();
+        const month = date.toLocaleString('en-GB', { month: 'long' });
+        const year = date.getFullYear();
 
-    return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+        return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+    }
+    // Return a formatted date in the format "YYYY-MM-DD"
+    else if (format === "HTML") {
+        return date.toISOString().split("T")[0];
+    }
+    else {
+        return date.toString();
+    }
 }
 
 // Return ordinal suffix for a given day (st, nd, rd, th)

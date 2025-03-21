@@ -1,9 +1,222 @@
 <script setup lang="ts">
+  import { reactive } from "vue";
+  import axiosInstance from "@/lib/axios";
+  import { type FoodForm, type FoodFormErrors, TimeOfDay, Size, SpiceLevel, FatContent } from "@/types";
+  import router from "@/router";
+  import { AxiosError } from "axios";
+  import { camelCaseToTitleCase } from "@/lib/string";
+  import { getFormattedDate } from "@/lib/date";
+
+  const form = reactive<FoodForm>({
+    date: getFormattedDate(new Date(), "HTML"),
+    timeOfDay: TimeOfDay.Morning,
+    foodTitle: "",
+    size: Size.Small,
+    spiceLevel: SpiceLevel.None,
+    fatContent: FatContent.None,
+    gluten: false,
+    dairy: false,
+  });
+
+  const errors = reactive<FoodFormErrors>({
+    api: "",
+    date: "",
+    timeOfDay: "",
+    foodTitle: "",
+    size: "",
+    spiceLevel: "",
+    fatContent: "",
+    gluten: "",
+    dairy: "",
+  });
+
+  const validateForm = () => {
+    let isValid = true;
+
+    Object.keys(errors).forEach((key) => {
+      errors[key as keyof FoodFormErrors] = "";
+    });
+
+    // All fields are mandatory
+    for (const key in form) {
+      const value = form[key as keyof FoodForm];
+
+      if (value === "" || value === null || value === undefined) {
+        errors[key as keyof FoodFormErrors] = `${camelCaseToTitleCase(key)} is required.`;
+        isValid = false;
+      }
+    }
+
+    return isValid;
+  };
+
+  const handleSubmit = async () => {
+    if (validateForm()) {
+      errors.api = await createFood(form);
+    }
+  };
+
+  const createFood = async (data: FoodForm) => {
+    try {
+        await axiosInstance.post('/food', data);
+        router.push('/dashboard');
+        return "";
+    } catch (e) {
+        if (e instanceof AxiosError && e.response?.status === 422) {
+            if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
+                return e.response?.data.message;
+            }
+            else {
+                return "An unexpected error occurred.";
+            }
+        }
+        else {
+            return "An unexpected error occurred.";
+        }
+    }
+  };
+
 </script>
 <template>
   <main class="main-container">
-      <div class="main-card">
+      <div class="main-card-extra-wide">
           <h1 class="main-title">Log Food</h1>
+          <form class="auth-form" novalidate @submit.prevent="handleSubmit()">
+            <!-- Date -->
+            <div class="form-group">
+              <label for="date" class="form-label">Date</label>
+              <input type="date" id="date" v-model="form.date" class="form-input" />
+              <span v-if="errors.date" class="form-error">{{ errors.date }}</span>
+            </div>
+
+            <!-- Time of day -->
+            <div class="form-group">
+              <label class="form-label">Time of Day</label>
+              <div class="form-radio-group">
+                <label>
+                  <input type="radio" value="Morning" v-model="form.timeOfDay" />
+                  Morning
+                </label>
+                <label>
+                  <input type="radio" value="Afternoon" v-model="form.timeOfDay" />
+                  Afternoon
+                </label>
+                <label>
+                  <input type="radio" value="Evening" v-model="form.timeOfDay" />
+                  Evening
+                </label>
+              </div>
+              <span v-if="errors.timeOfDay" class="form-error">{{ errors.timeOfDay }}</span>
+            </div>
+
+            <!-- Search pre-population -->
+            <p class="main-text">Search placeholder</p>
+
+            <!-- Food Title -->
+            <div class="form-group">
+                <label for="foodTitle" class="form-label">Food Title</label>
+                <input type="text" id="foodTitle" v-model="form.foodTitle" class="form-input" placeholder="Lamb Steak" />
+                <span v-if="errors.foodTitle" class="form-error">{{ errors.foodTitle }}</span>
+            </div>
+
+            <!-- Size -->
+            <div class="form-group">
+              <label class="form-label">Size</label>
+              <div class="form-radio-group">
+                <label>
+                  <input type="radio" value="Small" v-model="form.size" />
+                  Small
+                </label>
+                <label>
+                  <input type="radio" value="Medium" v-model="form.size" />
+                  Medium
+                </label>
+                <label>
+                  <input type="radio" value="Large" v-model="form.size" />
+                  Large
+                </label>
+                <label>
+                  <input type="radio" value="ExtraLarge" v-model="form.size" />
+                  Extra Large
+                </label>
+              </div>
+              <span v-if="errors.size" class="form-error">{{ errors.size }}</span>
+            </div>
+
+            <!-- Spice -->
+            <div class="form-group">
+              <label class="form-label">Spice Level</label>
+              <div class="form-radio-group">
+                <label>
+                  <input type="radio" value="None" v-model="form.spiceLevel" />
+                  None
+                </label>
+                <label>
+                  <input type="radio" value="Mild" v-model="form.spiceLevel" />
+                  Mild
+                </label>
+                <label>
+                  <input type="radio" value="Medium" v-model="form.spiceLevel" />
+                  Medium
+                </label>
+                <label>
+                  <input type="radio" value="Spicy" v-model="form.spiceLevel" />
+                  Spicy
+                </label>
+                <label>
+                  <input type="radio" value="ExtraSpicy" v-model="form.spiceLevel" />
+                  Extra Spicy
+                </label>
+              </div>
+              <span v-if="errors.spiceLevel" class="form-error">{{ errors.spiceLevel }}</span>
+            </div>
+
+            <!-- Fat Content -->
+            <div class="form-group">
+              <label class="form-label">Fat Content</label>
+              <div class="form-radio-group">
+                <label>
+                  <input type="radio" value="None" v-model="form.fatContent" />
+                  None
+                </label>
+                <label>
+                  <input type="radio" value="Low" v-model="form.fatContent" />
+                  Low
+                </label>
+                <label>
+                  <input type="radio" value="Medium" v-model="form.fatContent" />
+                  Medium
+                </label>
+                <label>
+                  <input type="radio" value="High" v-model="form.fatContent" />
+                  High
+                </label>
+                <label>
+                  <input type="radio" value="ExtraHigh" v-model="form.fatContent" />
+                  Extra High
+                </label>
+              </div>
+              <span v-if="errors.fatContent" class="form-error">{{ errors.fatContent }}</span>
+            </div>
+
+            <!-- Gluten and Dairy -->
+            <div class="form-checkbox-group">
+              <label>
+                <input type="checkbox" v-model="form.gluten" />
+                Gluten
+              </label>
+              <label>
+                <input type="checkbox" v-model="form.dairy" />
+                Dairy
+              </label>
+              <span v-if="errors.gluten || errors.dairy" class="form-error">
+                {{ errors.gluten || errors.dairy }}
+              </span>
+            </div>
+
+            <button type="submit" class="button cursor-pointer">Log</button>
+            <span v-if="errors.api" class="form-error api-error">{{ errors.api }}</span>
+        </form>
       </div>
   </main>
 </template>
