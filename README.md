@@ -1,6 +1,6 @@
 # EPI Health Tracker Frontend
 
-A Vue.js-based authentication UI that communicates with a backend API for user management. This project provides a secure and responsive authentication system, including login, registration, and user dashboard - with state persistence for a smooth user experience.
+Health tracker for EPI, including tracking food, medication, and symptoms. Including an authentication UI that communicates with a backend API for user management. This project provides a secure and responsive authentication system, including login, registration, and user dashboard - with state persistence for a smooth user experience.
 
 ## Tech Stack
 
