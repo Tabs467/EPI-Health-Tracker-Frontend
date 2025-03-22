@@ -45,7 +45,10 @@ export enum TimeOfDay {
     Evening = "Evening"
 }
 
-export interface FoodForm {
+export interface Form {
+}
+
+export interface FoodForm extends Form {
     date: string;
     timeOfDay: TimeOfDay;
     foodTitle: string;
@@ -56,7 +59,15 @@ export interface FoodForm {
     dairy: boolean;
 }
 
-interface FormErrors {
+export type ValidationRule = "mandatory" | `max:${number}`;
+
+export interface Validations {
+  [key: string]: ValidationRule[];
+}
+
+export interface FormErrors {
+    // Ensures all properties must be strings
+    [key: string]: string;
     api: string;
 }
 

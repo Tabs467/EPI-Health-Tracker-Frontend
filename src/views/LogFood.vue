@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import { reactive } from "vue";
   import axiosInstance from "@/lib/axios";
-  import { type FoodForm, type FoodFormErrors, TimeOfDay, Size, SpiceLevel, FatContent } from "@/types";
+  import { type FoodForm, type FoodFormErrors, TimeOfDay, Size, SpiceLevel, FatContent, type Validations } from "@/types";
   import router from "@/router";
   import { AxiosError } from "axios";
-  import { camelCaseToTitleCase } from "@/lib/string";
   import { getFormattedDate } from "@/lib/date";
+  import { validateForm } from "@/lib/validation_handler";
 
   const form = reactive<FoodForm>({
     date: getFormattedDate(new Date(), "HTML"),
@@ -30,37 +30,18 @@
     dairy: "",
   });
 
-  const validateForm = () => {
-    let isValid = true;
-
-    Object.keys(errors).forEach((key) => {
-      errors[key as keyof FoodFormErrors] = "";
-    });
-
-    for (const key in form) {
-      const value = form[key as keyof FoodForm];
-
-      // All fields are mandatory
-      if (value === "" || value === null || value === undefined) {
-        errors[key as keyof FoodFormErrors] = `${camelCaseToTitleCase(key)} is required.`;
-        isValid = false;
-      }
-
-      switch(key) {
-        case 'foodTitle':
-          if (typeof value === 'string' && value.length > 255) {
-            errors[key as keyof FoodFormErrors] = 'Food Title must be 255 characters or lower.';
-            isValid = false;
-          }
-          break;
-      }
-    }
-
-    return isValid;
-  };
-
   const handleSubmit = async () => {
-    if (validateForm()) {
+    const validations: Validations = {
+      date: ['mandatory'],
+      timeOfDay: ['mandatory'],
+      foodTitle: ['mandatory','max:255'],
+      size: ['mandatory'],
+      spiceLevel: ['mandatory'],
+      fatContent: ['mandatory'],
+      gluten: ['mandatory'],
+      dairy: ['mandatory'],
+    };
+    if (validateForm(form, errors, validations)) {
       errors.api = await createFood(form);
     }
   };
