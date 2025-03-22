@@ -1,11 +1,12 @@
 <script setup lang="ts">
   import { RouterLink, RouterView } from 'vue-router'
   import { useAuthStore } from './store/auth';
-  import { onMounted } from 'vue';
+  import { onMounted } from 'vue'; 
 
   const auth = useAuthStore();
 
   onMounted(() => {
+      document.title = "EPI Health Tracker";
       if (auth.user != null && !auth.isLoggedIn) {
           auth.getUser();
       }
