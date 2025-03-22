@@ -37,13 +37,22 @@
       errors[key as keyof FoodFormErrors] = "";
     });
 
-    // All fields are mandatory
     for (const key in form) {
       const value = form[key as keyof FoodForm];
 
+      // All fields are mandatory
       if (value === "" || value === null || value === undefined) {
         errors[key as keyof FoodFormErrors] = `${camelCaseToTitleCase(key)} is required.`;
         isValid = false;
+      }
+
+      switch(key) {
+        case 'foodTitle':
+          if (typeof value === 'string' && value.length > 255) {
+            errors[key as keyof FoodFormErrors] = 'Food Title must be 255 characters or lower.';
+            isValid = false;
+          }
+          break;
       }
     }
 
