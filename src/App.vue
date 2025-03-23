@@ -2,6 +2,7 @@
   import { RouterLink, RouterView } from 'vue-router'
   import { useAuthStore } from './store/auth';
   import { onMounted } from 'vue'; 
+  import 'vue-toast-notification/dist/theme-sugar.css';
 
   const auth = useAuthStore();
 

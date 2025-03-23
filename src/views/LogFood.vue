@@ -6,6 +6,7 @@
   import { AxiosError } from "axios";
   import { getFormattedDate } from "@/lib/date";
   import { validateForm } from "@/lib/validation_handler";
+  import {useToast} from 'vue-toast-notification';
 
   const form = reactive<FoodForm>({
     date: getFormattedDate(new Date(), "HTML"),
@@ -49,6 +50,8 @@
   const createFood = async (data: FoodForm) => {
     try {
         await axiosInstance.post('/food', data);
+        const toast = useToast();
+        toast.success('Food Logged!', {position: 'top'});
         router.push('/dashboard');
         return "";
     } catch (e) {
