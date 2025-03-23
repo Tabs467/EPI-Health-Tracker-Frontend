@@ -59,6 +59,12 @@ export interface FoodForm extends Form {
     dairy: boolean;
 }
 
+export interface SymptomForm extends Form {
+    date: string;
+    timeOfDay: TimeOfDay;
+    type: string;
+}
+
 export type ValidationRule = "mandatory" | `max:${number}`;
 
 export interface Validations {
@@ -80,4 +86,10 @@ export interface FoodFormErrors extends FormErrors {
     fatContent: string;
     gluten: string;
     dairy: string;
+}
+
+export interface SymptomFormErrors extends FormErrors {
+    date: string;
+    timeOfDay: string;
+    type: string;
 }
