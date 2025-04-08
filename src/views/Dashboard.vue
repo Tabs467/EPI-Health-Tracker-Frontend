@@ -17,7 +17,19 @@
               <p class="main-text-large text-left">Today's date is {{ currentDate }}</p>
             </div>
             <div class="grid-row-span-2">
-              <p>Recently added placeholder</p>
+            <p class="main-text-large">Recently logged</p>
+            <div class="scroll-box">
+              <div class="scrollable-content">
+                <div class="scroll-card">
+                  <p class="text">Ham and Cheese Sandwich</p>
+                  <p class="text text-semi-bold">2 Creon</p>
+                </div>
+                <div class="scroll-card">
+                  <p class="text">Coffee, Toast, Cheese</p>
+                  <p class="text text-semi-bold">1 Creon</p>
+                </div>
+              </div>
+            </div>
             </div>
             <div>
               <RouterLink to="/log" class="button button-wide">Log Food/Symptom</RouterLink>
