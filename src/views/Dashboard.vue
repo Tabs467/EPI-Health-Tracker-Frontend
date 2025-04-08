@@ -43,7 +43,7 @@
                 || isLater(food[foodIndex].timeOfDay, symptoms[symptomIndex].timeOfDay)
               )
             ) {
-              updatedRecentlyAdded.push({title: food[foodIndex].foodTitle});
+              updatedRecentlyAdded.push({title: food[foodIndex].foodTitle, additional: food[foodIndex].medication.toString()});
               foodIndex--;
             }
             else {
@@ -56,7 +56,7 @@
             symptomIndex--;
           }
           else if (foodIndex >= 0 && symptomIndex === -1) {
-            updatedRecentlyAdded.push({title: food[foodIndex].foodTitle});
+            updatedRecentlyAdded.push({title: food[foodIndex].foodTitle, additional: food[foodIndex].medication.toString()});
             foodIndex--;
           }
           else {
@@ -94,7 +94,7 @@
                 <template v-if="recentlyAdded.length != 0">
                   <div v-for="item in recentlyAdded" class="scroll-card">
                     <p class="text">{{ item.title }}</p>
-                    <p v-if="item.additional" class="text text-semi-bold">{{ item.additional }}</p>
+                    <p v-if="item.additional" class="text text-semi-bold">{{ item.additional }} Creon</p>
                   </div>
                   <div class="scroll-card scroll-card-button" @click="scrollCardNavigate('calendar')">
                     <p class="text text-white">See more</p>
