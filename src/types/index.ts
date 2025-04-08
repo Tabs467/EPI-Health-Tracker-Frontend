@@ -57,6 +57,7 @@ export interface FoodForm extends Form {
     fatContent: FatContent;
     gluten: boolean;
     dairy: boolean;
+    medication: number;
 }
 
 export interface SymptomForm extends Form {
@@ -65,7 +66,7 @@ export interface SymptomForm extends Form {
     type: string;
 }
 
-export type ValidationRule = "mandatory" | `max:${number}`;
+export type ValidationRule = "mandatory" | `max:${number}` | "integer" | "positive";
 
 export interface Validations {
   [key: string]: ValidationRule[];
@@ -86,6 +87,7 @@ export interface FoodFormErrors extends FormErrors {
     fatContent: string;
     gluten: string;
     dairy: string;
+    medication: string;
 }
 
 export interface SymptomFormErrors extends FormErrors {

@@ -4,6 +4,8 @@ import { camelCaseToTitleCase } from "./string";
 /**
  * Return whether a form's data is valid according to provided validation rules, along with validation messages
  * 
+ * Validations checked first take precedence
+ * 
  * Note: The use of "as any" is because we can guarantee all child classes of FormErrors will only store string values
  *       For further info, see Interface definition FormErrors
  * 
@@ -32,10 +34,13 @@ export function validateForm<TForm extends Form, TFormErrors extends FormErrors>
         const validation_rules = validations[field_title as keyof Validations];
 
         // For each validation rule applied to the field
+        validation_rules:
         for (const validation_rule of Object.values(validation_rules)) {
             /**
              * ValidationRule cases
              * "true" to Evaluate conditions dynamically (needed for regex)
+             * 
+             * Validations checked first take precedence
              */
             switch(true) {
                 // Mandatory
@@ -43,6 +48,7 @@ export function validateForm<TForm extends Form, TFormErrors extends FormErrors>
                     if (field_value === "" || field_value === null || field_value === undefined) {
                         formErrors[field_title as keyof TFormErrors] = `${camelCaseToTitleCase(field_title)} is required.` as any;
                         isValid = false;
+                        break validation_rules;
                       }
                     break;
                 // Max character length
@@ -51,6 +57,23 @@ export function validateForm<TForm extends Form, TFormErrors extends FormErrors>
                     if (field_value.length > maxLength) {
                         formErrors[field_title as keyof TFormErrors] = `${camelCaseToTitleCase(field_title)} must be ${maxLength} characters or lower.` as any;
                         isValid = false;
+                        break validation_rules;
+                    }
+                    break;
+                // Integer
+                case validation_rule === 'integer':
+                    if (!Number.isInteger(Number(field_value))) {
+                        formErrors[field_title as keyof TFormErrors] = `${camelCaseToTitleCase(field_title)} must be a whole number.` as any;
+                        isValid = false;
+                        break validation_rules;
+                    }
+                    break;
+                // Positive, including 0
+                case validation_rule === 'positive':
+                    if (Number(field_value) < 0 ) {
+                        formErrors[field_title as keyof TFormErrors] = `${camelCaseToTitleCase(field_title)} must be 0 or more.` as any;
+                        isValid = false;
+                        break validation_rules;
                     }
                     break;
                 default:

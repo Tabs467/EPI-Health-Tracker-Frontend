@@ -17,6 +17,7 @@
     fatContent: FatContent.None,
     gluten: false,
     dairy: false,
+    medication: 2,
   });
 
   const errors = reactive<FoodFormErrors>({
@@ -29,6 +30,7 @@
     fatContent: "",
     gluten: "",
     dairy: "",
+    medication: "",
   });
 
   const handleSubmit = async () => {
@@ -41,6 +43,7 @@
       fatContent: ['mandatory'],
       gluten: ['mandatory'],
       dairy: ['mandatory'],
+      medication: ['mandatory', 'integer', 'positive'],
     };
     if (validateForm(form, errors, validations)) {
       errors.api = await createFood(form);
@@ -110,6 +113,13 @@
                 <label for="foodTitle" class="form-label">Food Title</label>
                 <input type="text" id="foodTitle" v-model="form.foodTitle" class="form-input" placeholder="Lamb Steak" />
                 <span v-if="errors.foodTitle" class="form-error">{{ errors.foodTitle }}</span>
+            </div>
+
+            <!-- Medication -->
+            <div class="form-group">
+                <label for="medication" class="form-label">Medication (tablets)</label>
+                <input type="text" id="medication" v-model="form.medication" class="form-input" placeholder="2" />
+                <span v-if="errors.medication" class="form-error">{{ errors.medication }}</span>
             </div>
 
             <!-- Size -->
