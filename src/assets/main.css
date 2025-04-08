@@ -129,6 +129,10 @@
   @apply font-semibold;
 }
 
+.text-white {
+  @apply text-white;
+}
+
 .text-left {
   @apply text-left ml-10;
 }
@@ -192,4 +196,8 @@
 
 .scroll-card {
   @apply mb-2 bg-white w-full max-w-md p-2 rounded-lg text-center;
+}
+
+.scroll-card-button {
+  @apply cursor-pointer bg-orange-500;
 }

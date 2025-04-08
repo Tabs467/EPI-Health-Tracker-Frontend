@@ -1,3 +1,5 @@
+import type { TimeOfDay } from "@/types";
+
 // Return a formatted date
 export function getFormattedDate(date: Date, format: string): string {
     // Return a formatted date in the format "18th March 2025"
@@ -31,3 +33,13 @@ export function getOrdinalSuffix(day: number): string {
         default: return 'th';
     }
 };
+
+// Return whether time1 is earlier than time2
+export function isEarlier(time1: TimeOfDay, time2: TimeOfDay): boolean {
+    return time1 < time2;
+}
+
+// Return whether time1 is later than time2
+export function isLater(time1: TimeOfDay, time2: TimeOfDay): boolean {
+    return time1 > time2;
+}

@@ -93,3 +93,8 @@ export interface SymptomFormErrors extends FormErrors {
     timeOfDay: string;
     type: string;
 }
+
+export interface ItemHeadline {
+    title: string;
+    additional?: string;
+}
