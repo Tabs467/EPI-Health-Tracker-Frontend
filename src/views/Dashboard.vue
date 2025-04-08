@@ -32,6 +32,10 @@
         });
       }
       else {
+        // Reverse arrays, since we work through them backwards when populating recentlyAdded
+        food.reverse();
+        symptoms.reverse();
+
         let foodIndex = food.length - 1;
         let symptomIndex = symptoms.length - 1;
         for (let headlineIndex = 0; headlineIndex < 10; headlineIndex++) {
