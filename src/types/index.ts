@@ -45,10 +45,10 @@ export enum TimeOfDay {
     Evening = "Evening"
 }
 
-export interface Form {
+export interface TrackableItem {
 }
 
-export interface FoodForm extends Form {
+export interface Food extends TrackableItem {
     date: string;
     timeOfDay: TimeOfDay;
     foodTitle: string;
@@ -60,7 +60,7 @@ export interface FoodForm extends Form {
     medication: number;
 }
 
-export interface SymptomForm extends Form {
+export interface Symptom extends TrackableItem {
     date: string;
     timeOfDay: TimeOfDay;
     type: string;
@@ -72,13 +72,13 @@ export interface Validations {
   [key: string]: ValidationRule[];
 }
 
-export interface FormErrors {
+export interface TrackableItemErrors {
     // Ensures all properties must be strings
     [key: string]: string;
     api: string;
 }
 
-export interface FoodFormErrors extends FormErrors {
+export interface FoodErrors extends TrackableItemErrors {
     date: string;
     timeOfDay: string;
     foodTitle: string;
@@ -90,7 +90,7 @@ export interface FoodFormErrors extends FormErrors {
     medication: string;
 }
 
-export interface SymptomFormErrors extends FormErrors {
+export interface SymptomErrors extends TrackableItemErrors {
     date: string;
     timeOfDay: string;
     type: string;

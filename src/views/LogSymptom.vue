@@ -1,20 +1,20 @@
 <script setup lang="ts">
   import { reactive } from "vue";
   import axiosInstance from "@/lib/axios";
-  import { type SymptomForm, type SymptomFormErrors, TimeOfDay, type Validations} from "@/types";
+  import { type Symptom, type SymptomErrors, TimeOfDay, type Validations} from "@/types";
   import router from "@/router";
   import { AxiosError } from "axios";
   import { getFormattedDate } from "@/lib/date";
-  import { validateForm } from "@/lib/validation_handler";
+  import { validateTrackableItemForm } from "@/lib/validation_handler";
   import {useToast} from 'vue-toast-notification';
 
-  const form = reactive<SymptomForm>({
+  const form = reactive<Symptom>({
     date: getFormattedDate(new Date(), "HTML"),
     timeOfDay: TimeOfDay.Morning,
     type: "",
   });
 
-  const errors = reactive<SymptomFormErrors>({
+  const errors = reactive<SymptomErrors>({
     api: "",
     date: "",
     timeOfDay: "",
@@ -27,12 +27,12 @@
       timeOfDay: ['mandatory'],
       type: ['mandatory'],
     };
-    if (validateForm(form, errors, validations)) {
+    if (validateTrackableItemForm(form, errors, validations)) {
       errors.api = await createSymptom(form);
     }
   };
 
-  const createSymptom = async (data: SymptomForm) => {
+  const createSymptom = async (data: Symptom) => {
     try {
         await axiosInstance.post('/symptom', data);
         const toast = useToast();

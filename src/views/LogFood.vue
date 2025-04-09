@@ -1,14 +1,14 @@
 <script setup lang="ts">
   import { reactive } from "vue";
   import axiosInstance from "@/lib/axios";
-  import { type FoodForm, type FoodFormErrors, TimeOfDay, Size, SpiceLevel, FatContent, type Validations } from "@/types";
+  import { type Food, type FoodErrors, TimeOfDay, Size, SpiceLevel, FatContent, type Validations } from "@/types";
   import router from "@/router";
   import { AxiosError } from "axios";
   import { getFormattedDate } from "@/lib/date";
-  import { validateForm } from "@/lib/validation_handler";
+  import { validateTrackableItemForm } from "@/lib/validation_handler";
   import {useToast} from 'vue-toast-notification';
 
-  const form = reactive<FoodForm>({
+  const form = reactive<Food>({
     date: getFormattedDate(new Date(), "HTML"),
     timeOfDay: TimeOfDay.Morning,
     foodTitle: "",
@@ -20,7 +20,7 @@
     medication: 2,
   });
 
-  const errors = reactive<FoodFormErrors>({
+  const errors = reactive<FoodErrors>({
     api: "",
     date: "",
     timeOfDay: "",
@@ -45,12 +45,12 @@
       dairy: ['mandatory'],
       medication: ['mandatory', 'integer', 'positive'],
     };
-    if (validateForm(form, errors, validations)) {
+    if (validateTrackableItemForm(form, errors, validations)) {
       errors.api = await createFood(form);
     }
   };
 
-  const createFood = async (data: FoodForm) => {
+  const createFood = async (data: Food) => {
     try {
         await axiosInstance.post('/food', data);
         const toast = useToast();

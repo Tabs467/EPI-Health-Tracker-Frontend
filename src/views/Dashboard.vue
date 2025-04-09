@@ -3,7 +3,7 @@
   import { getFormattedDate, isLater } from "@/lib/date";
   import { onMounted, ref } from "vue";
   import axiosInstance from "@/lib/axios";
-  import { type FoodForm, type ItemHeadline, type SymptomForm } from "@/types";
+  import { type Food, type ItemHeadline, type Symptom } from "@/types";
   import router from "@/router";
   import { camelCaseToTitleCase } from "@/lib/string";
   
@@ -15,9 +15,9 @@
 
   const getRecentlyAdded = async (page = 1) => {
       const foodResponse = await axiosInstance.get('/food');
-      const food: FoodForm[] = foodResponse.data.data;
+      const food: Food[] = foodResponse.data.data;
       const symptomResponse = await axiosInstance.get('/symptom');
-      const symptoms: SymptomForm[] = symptomResponse.data.data;
+      const symptoms: Symptom[] = symptomResponse.data.data;
 
       let updatedRecentlyAdded: ItemHeadline[] = [];
 
