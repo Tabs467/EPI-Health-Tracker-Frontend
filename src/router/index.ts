@@ -87,12 +87,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
   if (to.matched.some((record) => record.meta.requiresAuth) && !auth.isLoggedIn) {
+    window.scrollTo(0, 0);
     next({name: "login"});
   }
   else if (to.matched.some((record) => record.meta.requiresGuest) && auth.isLoggedIn) {
+    window.scrollTo(0, 0);
     next({name: "dashboard"});
   }
   else {
+    window.scrollTo(0, 0);
     next();
   }
 });
