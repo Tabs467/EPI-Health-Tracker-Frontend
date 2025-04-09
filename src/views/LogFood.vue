@@ -1,12 +1,15 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+  import { onMounted, reactive } from "vue";
   import axiosInstance from "@/lib/axios";
+  import { useTrackableItemStore } from "@/store/trackable_item";
   import { type Food, type FoodErrors, TimeOfDay, Size, SpiceLevel, FatContent, type Validations } from "@/types";
   import router from "@/router";
   import { AxiosError } from "axios";
   import { getFormattedDate } from "@/lib/date";
   import { validateTrackableItemForm } from "@/lib/validation_handler";
   import {useToast} from 'vue-toast-notification';
+
+  const foodEdit = useTrackableItemStore();
 
   const form = reactive<Food>({
     date: getFormattedDate(new Date(), "HTML"),
@@ -72,11 +75,19 @@
     }
   };
 
+  /**
+   * Edit pre-population from pinia store
+   */
+  onMounted(async () => {
+    if (foodEdit.stateSet()) {
+      Object.assign(form, foodEdit.trackableItem);
+    }
+  });
 </script>
 <template>
   <main class="main-container">
       <div class="main-card-extra-wide">
-          <h1 class="main-title">Log Food</h1>
+          <h1 class="main-title">{{ foodEdit.stateSet() ? "Edit Food Log" : "Log Food" }}</h1>
           <form class="auth-form" novalidate @submit.prevent="handleSubmit()">
             <!-- Date -->
             <div class="form-group">
@@ -217,7 +228,8 @@
               </span>
             </div>
 
-            <button type="submit" class="button cursor-pointer">Log</button>
+            <button type="submit" class="button cursor-pointer">{{ foodEdit.stateSet() ? "Save Edit" : "Log" }}</button>
+            <RouterLink v-if="foodEdit.stateSet()" to="/dashboard" class="button secondary">Return</RouterLink>
             <span v-if="errors.api" class="form-error api-error">{{ errors.api }}</span>
         </form>
       </div>

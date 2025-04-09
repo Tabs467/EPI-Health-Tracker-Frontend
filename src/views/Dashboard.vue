@@ -1,14 +1,16 @@
 <script setup lang="ts">
   import { useAuthStore } from "@/store/auth";
+  import { useTrackableItemStore } from "@/store/trackable_item";
   import { getFormattedDate, isLater } from "@/lib/date";
   import { onMounted, ref } from "vue";
   import axiosInstance from "@/lib/axios";
-  import { type Food, type ItemHeadline, type Symptom } from "@/types";
+  import { type Food, type ItemHeadline, type Symptom, type TrackableItem } from "@/types";
   import router from "@/router";
   import { camelCaseToTitleCase } from "@/lib/string";
   
 
   const auth = useAuthStore();
+  const trackableItem = useTrackableItemStore();
   let currentDate = getFormattedDate(new Date(), "display");
 
   const recentlyAdded = ref<ItemHeadline[]>([]);
@@ -23,12 +25,12 @@
 
       if (food.length === 0) {
         symptoms.forEach(function(symptomElement, index) {
-          updatedRecentlyAdded.push({title: symptomElement.type});
+          updatedRecentlyAdded.push({title: symptomElement.type, item: symptomElement});
         });
       }
       else if (symptoms.length === 0) {
         food.forEach(function(foodElement, index) {
-          updatedRecentlyAdded.push({title: foodElement.foodTitle});
+          updatedRecentlyAdded.push({title: foodElement.foodTitle, additional: foodElement.medication.toString(), item: foodElement});
         });
       }
       else {
@@ -47,20 +49,20 @@
                 || isLater(food[foodIndex].timeOfDay, symptoms[symptomIndex].timeOfDay)
               )
             ) {
-              updatedRecentlyAdded.push({title: food[foodIndex].foodTitle, additional: food[foodIndex].medication.toString()});
+              updatedRecentlyAdded.push({title: food[foodIndex].foodTitle, additional: food[foodIndex].medication.toString(), item: food[foodIndex]});
               foodIndex--;
             }
             else {
-              updatedRecentlyAdded.push({title: camelCaseToTitleCase(symptoms[symptomIndex].type)});
+              updatedRecentlyAdded.push({title: camelCaseToTitleCase(symptoms[symptomIndex].type), item: symptoms[symptomIndex]});
               symptomIndex--;
             }
           }
           else if (foodIndex === -1 && symptomIndex >= 0) {
-            updatedRecentlyAdded.push({title: camelCaseToTitleCase(symptoms[symptomIndex].type)});
+            updatedRecentlyAdded.push({title: camelCaseToTitleCase(symptoms[symptomIndex].type), item: symptoms[symptomIndex]});
             symptomIndex--;
           }
           else if (foodIndex >= 0 && symptomIndex === -1) {
-            updatedRecentlyAdded.push({title: food[foodIndex].foodTitle, additional: food[foodIndex].medication.toString()});
+            updatedRecentlyAdded.push({title: food[foodIndex].foodTitle, additional: food[foodIndex].medication.toString(), item: food[foodIndex]});
             foodIndex--;
           }
           else {
@@ -76,7 +78,10 @@
       await getRecentlyAdded();
   });
 
-  const scrollCardNavigate = (location: string) => {
+  const scrollCardNavigate = (location: string, item?: TrackableItem) => {
+    if (item) {
+      trackableItem.setState(item);
+    }
     router.push(`/${location}`);
   };
 </script>
@@ -96,7 +101,7 @@
             <div class="scroll-box">
               <div class="scrollable-content">
                 <template v-if="recentlyAdded.length != 0">
-                  <div v-for="item in recentlyAdded" class="scroll-card">
+                  <div v-for="item in recentlyAdded" class="scroll-card" @click="scrollCardNavigate('foodTitle' in item.item ? 'log-food' : 'log-symptom', item.item)">
                     <p class="text">{{ item.title }}</p>
                     <p v-if="item.additional" class="text text-semi-bold">{{ item.additional }} Creon</p>
                   </div>

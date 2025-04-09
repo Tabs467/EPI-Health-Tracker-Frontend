@@ -1,12 +1,15 @@
 <script setup lang="ts">
-  import { reactive } from "vue";
+  import { onMounted, reactive } from "vue";
   import axiosInstance from "@/lib/axios";
+  import { useTrackableItemStore } from "@/store/trackable_item";
   import { type Symptom, type SymptomErrors, TimeOfDay, type Validations} from "@/types";
   import router from "@/router";
   import { AxiosError } from "axios";
   import { getFormattedDate } from "@/lib/date";
   import { validateTrackableItemForm } from "@/lib/validation_handler";
   import {useToast} from 'vue-toast-notification';
+
+  const symptomEdit = useTrackableItemStore();
 
   const form = reactive<Symptom>({
     date: getFormattedDate(new Date(), "HTML"),
@@ -54,11 +57,19 @@
     }
   };
 
+  /**
+   * Edit pre-population from pinia store
+   */
+  onMounted(async () => {
+    if (symptomEdit.stateSet()) {
+      Object.assign(form, symptomEdit.trackableItem);
+    }
+  });
 </script>
 <template>
   <main class="main-container">
       <div class="main-card-extra-wide">
-          <h1 class="main-title">Log Symptom</h1>
+          <h1 class="main-title">{{ symptomEdit.stateSet() ? "Edit Symptom Log" : "Log Symptom" }}</h1>
           <form class="auth-form" novalidate @submit.prevent="handleSubmit()">
             <!-- Date -->
             <div class="form-group">
@@ -98,7 +109,8 @@
               <span v-if="errors.type" class="form-error">{{ errors.type }}</span>
             </div>
 
-            <button type="submit" class="button cursor-pointer">Log</button>
+            <button type="submit" class="button cursor-pointer">{{ symptomEdit.stateSet() ? "Save Edit" : "Log" }}</button>
+            <RouterLink v-if="symptomEdit.stateSet()" to="/dashboard" class="button secondary">Return</RouterLink>
             <span v-if="errors.api" class="form-error api-error">{{ errors.api }}</span>
         </form>
       </div>

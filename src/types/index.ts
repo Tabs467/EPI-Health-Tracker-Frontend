@@ -99,4 +99,5 @@ export interface SymptomErrors extends TrackableItemErrors {
 export interface ItemHeadline {
     title: string;
     additional?: string;
+    item: TrackableItem;
 }

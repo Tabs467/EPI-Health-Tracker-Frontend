@@ -11,6 +11,7 @@ import Calendar from '../views/Calendar.vue'
 import Search from '../views/Search.vue'
 import ErrorCode from '../views/ErrorCode.vue'
 import { useAuthStore } from '@/store/auth'
+import { useTrackableItemStore } from '@/store/trackable_item'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -97,6 +98,13 @@ router.beforeEach((to, from, next) => {
   else {
     window.scrollTo(0, 0);
     next();
+  }
+});
+
+router.afterEach((to, from, next) => {
+  if (from.name === 'log-food' || from.name === 'log-symptom') {
+    const trackableItem = useTrackableItemStore();
+    trackableItem.cleanState();
   }
 });
 
