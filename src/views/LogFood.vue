@@ -12,6 +12,7 @@
   const foodEdit = useTrackableItemStore();
 
   const form = reactive<Food>({
+    id: 0,
     date: getFormattedDate(new Date(), "HTML"),
     timeOfDay: TimeOfDay.Morning,
     foodTitle: "",
@@ -55,9 +56,16 @@
 
   const createFood = async (data: Food) => {
     try {
-        await axiosInstance.post('/food', data);
         const toast = useToast();
-        toast.success('Food Logged!', {position: 'top'});
+        if (foodEdit.stateSet()) {
+          await axiosInstance.patch(`/food/${data.id}`, data);
+          toast.success('Food Edited!', {position: 'top'});
+        }
+        else {
+          await axiosInstance.post('/food', data);
+          toast.success('Food Logged!', {position: 'top'});
+        }
+
         router.push('/dashboard');
         return "";
     } catch (e) {

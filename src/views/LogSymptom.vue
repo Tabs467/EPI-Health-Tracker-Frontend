@@ -12,6 +12,7 @@
   const symptomEdit = useTrackableItemStore();
 
   const form = reactive<Symptom>({
+    id: 0,
     date: getFormattedDate(new Date(), "HTML"),
     timeOfDay: TimeOfDay.Morning,
     type: "",
@@ -37,9 +38,16 @@
 
   const createSymptom = async (data: Symptom) => {
     try {
-        await axiosInstance.post('/symptom', data);
         const toast = useToast();
-        toast.success('Symptom Logged!', {position: 'top'});
+        if (symptomEdit.stateSet()) {
+          await axiosInstance.patch(`/symptom/${data.id}`, data);
+          toast.success('Symptom Edited!', {position: 'top'});
+        }
+        else {
+          await axiosInstance.post('/symptom', data);
+          toast.success('Symptom Logged!', {position: 'top'});
+        }
+
         router.push('/dashboard');
         return "";
     } catch (e) {

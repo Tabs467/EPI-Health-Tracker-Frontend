@@ -45,7 +45,11 @@ export enum TimeOfDay {
     Evening = "Evening"
 }
 
+/**
+ * id optional since only exists upon Item insertion to database
+ */
 export interface TrackableItem {
+    id?: number;
 }
 
 export interface Food extends TrackableItem {
