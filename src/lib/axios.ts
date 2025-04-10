@@ -1,6 +1,6 @@
 import router from "@/router";
 import { useAuthStore } from "@/store/auth";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:8000/api",
@@ -33,5 +33,20 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+// Return an error message for any caught API errors
+export function handleAPIErrors(e: any): string {
+    if (e instanceof AxiosError && e.response?.status === 422) {
+        if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
+            return e.response?.data.message;
+        }
+        else {
+            return "An unexpected error occurred.";
+        }
+    }
+    else {
+        return "An unexpected error occurred.";
+    }
+};
 
 export default axiosInstance;

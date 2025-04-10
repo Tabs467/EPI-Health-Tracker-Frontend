@@ -1,10 +1,9 @@
 <script setup lang="ts">
   import { onMounted, reactive, ref } from "vue";
-  import axiosInstance from "@/lib/axios";
+  import axiosInstance, { handleAPIErrors } from "@/lib/axios";
   import { useTrackableItemStore } from "@/store/trackable_item";
   import { type Symptom, type SymptomErrors, TimeOfDay, type Validations} from "@/types";
   import router from "@/router";
-  import { AxiosError } from "axios";
   import { getFormattedDate } from "@/lib/date";
   import { validateTrackableItemForm } from "@/lib/validation_handler";
   import {useToast} from 'vue-toast-notification';
@@ -54,17 +53,7 @@
         router.push('/dashboard');
         return "";
     } catch (e) {
-        if (e instanceof AxiosError && e.response?.status === 422) {
-            if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
-                return e.response?.data.message;
-            }
-            else {
-                return "An unexpected error occurred.";
-            }
-        }
-        else {
-            return "An unexpected error occurred.";
-        }
+        return handleAPIErrors(e);
     }
   };
 
@@ -81,17 +70,7 @@
         router.push('/dashboard');
         return "";
     } catch (e) {
-        if (e instanceof AxiosError && e.response?.status === 422) {
-            if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
-                return e.response?.data.message;
-            }
-            else {
-                return "An unexpected error occurred.";
-            }
-        }
-        else {
-            return "An unexpected error occurred.";
-        }
+      return handleAPIErrors(e);
     }
   };
 

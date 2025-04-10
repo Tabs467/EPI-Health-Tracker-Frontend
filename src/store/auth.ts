@@ -1,10 +1,9 @@
 import { defineStore } from "pinia";
 import type { LoginForm, User } from "@/types";
 import { ref } from "vue";
-import axiosInstance from "@/lib/axios";
+import axiosInstance, { handleAPIErrors } from "@/lib/axios";
 import type { RegisterForm } from "@/types";
 import router from "@/router";
-import { AxiosError } from "axios";
 
 export const useAuthStore = defineStore("auth", () => 
     {
@@ -20,17 +19,7 @@ export const useAuthStore = defineStore("auth", () =>
                 await getUser();
                 router.push('/dashboard');
             } catch (e) {
-                if (e instanceof AxiosError && e.response?.status === 422) {
-                    if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
-                        return e.response?.data.message;
-                    }
-                    else {
-                        return "An unexpected error occurred.";
-                    }
-                }
-                else {
-                    return "An unexpected error occurred.";
-                }
+                return handleAPIErrors(e);
             }
         };
 
@@ -43,17 +32,7 @@ export const useAuthStore = defineStore("auth", () =>
                 await getUser();
                 router.push('/dashboard');
             } catch (e) {
-                if (e instanceof AxiosError && e.response?.status === 422) {
-                    if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
-                        return e.response?.data.message;
-                    }
-                    else {
-                        return "An unexpected error occurred.";
-                    }
-                }
-                else {
-                    return "An unexpected error occurred.";
-                }
+                return handleAPIErrors(e);
             }
         };
 
