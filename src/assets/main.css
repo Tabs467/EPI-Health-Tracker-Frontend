@@ -28,6 +28,10 @@
   @apply bg-gray-300 text-gray-800 hover:bg-gray-400;
 }
 
+.button.delete {
+  @apply bg-red-500 hover:bg-red-700;
+}
+
 /* Center the form */
 .auth-container {
   @apply flex items-center justify-center min-h-screen bg-gray-100 px-4;

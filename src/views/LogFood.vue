@@ -83,6 +83,29 @@
     }
   };
 
+  const deleteFood = async () => {
+    try {
+        const toast = useToast();
+        await axiosInstance.delete(`/food/${form.id}`);
+        toast.success('Food Deleted!', {position: 'top'});
+
+        router.push('/dashboard');
+        return "";
+    } catch (e) {
+        if (e instanceof AxiosError && e.response?.status === 422) {
+            if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
+                return e.response?.data.message;
+            }
+            else {
+                return "An unexpected error occurred.";
+            }
+        }
+        else {
+            return "An unexpected error occurred.";
+        }
+    }
+  };
+
   /**
    * Edit pre-population from pinia store
    */
@@ -237,7 +260,10 @@
             </div>
 
             <button type="submit" class="button cursor-pointer">{{ foodEdit.stateSet() ? "Save Edit" : "Log" }}</button>
-            <RouterLink v-if="foodEdit.stateSet()" to="/dashboard" class="button secondary">Return</RouterLink>
+            <template v-if="foodEdit.stateSet()">
+              <button type="button" class="button delete cursor-pointer" @click="deleteFood()">Delete</button>
+              <RouterLink to="/dashboard" class="button secondary">Return</RouterLink>
+            </template>
             <span v-if="errors.api" class="form-error api-error">{{ errors.api }}</span>
         </form>
       </div>

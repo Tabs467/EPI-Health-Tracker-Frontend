@@ -65,6 +65,29 @@
     }
   };
 
+  const deleteSymptom = async () => {
+    try {
+        const toast = useToast();
+        await axiosInstance.delete(`/symptom/${form.id}`);
+        toast.success('Symptom Deleted!', {position: 'top'});
+
+        router.push('/dashboard');
+        return "";
+    } catch (e) {
+        if (e instanceof AxiosError && e.response?.status === 422) {
+            if (typeof e.response?.data.message === 'string' || e.response?.data.message instanceof String) {
+                return e.response?.data.message;
+            }
+            else {
+                return "An unexpected error occurred.";
+            }
+        }
+        else {
+            return "An unexpected error occurred.";
+        }
+    }
+  };
+
   /**
    * Edit pre-population from pinia store
    */
@@ -118,7 +141,10 @@
             </div>
 
             <button type="submit" class="button cursor-pointer">{{ symptomEdit.stateSet() ? "Save Edit" : "Log" }}</button>
-            <RouterLink v-if="symptomEdit.stateSet()" to="/dashboard" class="button secondary">Return</RouterLink>
+            <template v-if="symptomEdit.stateSet()">
+              <button type="button" class="button delete cursor-pointer" @click="deleteSymptom()">Delete</button>
+              <RouterLink to="/dashboard" class="button secondary">Return</RouterLink>
+            </template>
             <span v-if="errors.api" class="form-error api-error">{{ errors.api }}</span>
         </form>
       </div>
