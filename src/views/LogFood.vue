@@ -2,7 +2,7 @@
   import { onMounted, reactive, ref } from "vue";
   import axiosInstance from "@/lib/axios";
   import { useTrackableItemStore } from "@/store/trackable_item";
-  import { type Food, type FoodErrors, TimeOfDay, Size, SpiceLevel, FatContent, type Validations } from "@/types";
+  import { type Food, type FoodErrors, TimeOfDay, Size, SpiceLevel, FatContent, Caffeine, type Validations } from "@/types";
   import router from "@/router";
   import { AxiosError } from "axios";
   import { getFormattedDate } from "@/lib/date";
@@ -22,6 +22,7 @@
     size: Size.Small,
     spiceLevel: SpiceLevel.None,
     fatContent: FatContent.None,
+    caffeine: Caffeine.None,
     gluten: false,
     dairy: false,
     medication: 2,
@@ -35,6 +36,7 @@
     size: "",
     spiceLevel: "",
     fatContent: "",
+    caffeine: "",
     gluten: "",
     dairy: "",
     medication: "",
@@ -250,6 +252,30 @@
               </label>
             </div>
             <span v-if="errors.fatContent" class="form-error">{{ errors.fatContent }}</span>
+          </div>
+
+          <!-- Caffeine -->
+          <div class="form-group">
+            <label class="form-label">Caffeine</label>
+            <div class="form-radio-group">
+              <label>
+                <input type="radio" value="None" v-model="form.caffeine" />
+                None
+              </label>
+              <label>
+                <input type="radio" value="Low" v-model="form.caffeine" />
+                Low
+              </label>
+              <label>
+                <input type="radio" value="Medium" v-model="form.caffeine" />
+                Medium
+              </label>
+              <label>
+                <input type="radio" value="High" v-model="form.caffeine" />
+                High
+              </label>
+            </div>
+            <span v-if="errors.caffeine" class="form-error">{{ errors.caffeine }}</span>
           </div>
 
           <!-- Gluten and Dairy -->

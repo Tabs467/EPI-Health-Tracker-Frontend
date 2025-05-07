@@ -39,6 +39,13 @@ export enum FatContent {
     ExtraHigh = "ExtraHigh",
 }
 
+export enum Caffeine {
+    None = "None",
+    Low = "Low",
+    Medium = "Medium",
+    High = "High",
+}
+
 export enum TimeOfDay {
     Morning = "Morning",
     Afternoon = "Afternoon",
@@ -59,6 +66,7 @@ export interface Food extends TrackableItem {
     size: Size;
     spiceLevel: SpiceLevel;
     fatContent: FatContent;
+    caffeine: Caffeine;
     gluten: boolean;
     dairy: boolean;
     medication: number;
@@ -89,6 +97,7 @@ export interface FoodErrors extends TrackableItemErrors {
     size: string;
     spiceLevel: string;
     fatContent: string;
+    caffeine: string;
     gluten: string;
     dairy: string;
     medication: string;
